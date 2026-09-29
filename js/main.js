@@ -278,6 +278,152 @@ function initContactForm() {
   form.addEventListener('focusout', handleFieldUpdate); // focusout bubbles, blur does not
 }
 
+function prefersReducedMotion() {
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+/**
+ * Fades/slides [data-reveal] elements in once as they enter the viewport.
+ * Siblings are staggered via the --reveal-delay custom property.
+ */
+function initScrollReveal() {
+  const items = document.querySelectorAll('[data-reveal]');
+  const VISIBLE_CLASS = 'is-visible';
+  const STAGGER_MS = 120;
+
+  if (!items.length) {
+    return;
+  }
+
+  function reveal(element) {
+    element.classList.add(VISIBLE_CLASS);
+  }
+
+  if (prefersReducedMotion() || !('IntersectionObserver' in window)) {
+    items.forEach(reveal);
+    return;
+  }
+
+  function setStaggerDelay(element) {
+    const siblings = Array.from(element.parentElement.children)
+      .filter((sibling) => sibling.hasAttribute('data-reveal'));
+    const index = siblings.indexOf(element);
+    element.style.setProperty('--reveal-delay', `${index * STAGGER_MS}ms`);
+  }
+
+  function handleIntersect(entries, observer) {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        reveal(entry.target);
+        observer.unobserve(entry.target);
+      }
+    });
+  }
+
+  const observer = new IntersectionObserver(handleIntersect, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -8% 0px',
+  });
+
+  items.forEach((element) => {
+    setStaggerDelay(element);
+    observer.observe(element);
+  });
+}
+
+/**
+ * Counts [data-count] numbers up from 0 the first time they scroll into view.
+ * Screen readers always get the final value from a visually hidden copy.
+ */
+function initCountUp() {
+  const counters = document.querySelectorAll('[data-count]');
+  const DURATION_MS = 1600;
+
+  if (!counters.length || prefersReducedMotion() || !('IntersectionObserver' in window)) {
+    return;
+  }
+
+  function formatNumber(value, suffix) {
+    return `${value.toLocaleString('en-US')}${suffix}`;
+  }
+
+  function prepareCounter(element) {
+    const finalText = element.textContent.trim();
+    const suffix = element.dataset.suffix || '';
+    const srText = document.createElement('span');
+    const visualText = document.createElement('span');
+
+    srText.className = 'visually-hidden';
+    srText.textContent = finalText;
+    visualText.setAttribute('aria-hidden', 'true');
+    visualText.textContent = formatNumber(0, suffix);
+
+    element.replaceChildren(srText, visualText);
+    return visualText;
+  }
+
+  function animateCounter(element, visualText) {
+    const target = Number(element.dataset.count);
+    const suffix = element.dataset.suffix || '';
+    const start = performance.now();
+
+    function step(now) {
+      const progress = Math.min((now - start) / DURATION_MS, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      visualText.textContent = formatNumber(Math.round(target * eased), suffix);
+
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      }
+    }
+
+    window.requestAnimationFrame(step);
+  }
+
+  const visualTexts = new Map();
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target, visualTexts.get(entry.target));
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  counters.forEach((element) => {
+    if (Number.isFinite(Number(element.dataset.count))) {
+      visualTexts.set(element, prepareCounter(element));
+      observer.observe(element);
+    }
+  });
+}
+
+/**
+ * Moves a radial "spotlight" glow with the cursor inside each feature card.
+ * Only for fine pointers with hover; skipped when reduced motion is preferred.
+ */
+function initCardSpotlight() {
+  const cards = document.querySelectorAll('.feature-card');
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  if (!cards.length || !canHover || prefersReducedMotion()) {
+    return;
+  }
+
+  function handlePointerMove(event) {
+    const card = event.currentTarget;
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty('--x', `${event.clientX - rect.left}px`);
+    card.style.setProperty('--y', `${event.clientY - rect.top}px`);
+  }
+
+  cards.forEach((card) => card.addEventListener('pointermove', handlePointerMove));
+}
+
 initNavigation();
 initThemeToggle();
 initContactForm();
+initScrollReveal();
+initCountUp();
+initCardSpotlight();

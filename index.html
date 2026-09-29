@@ -6,17 +6,23 @@
   <title>Flowly — Workflow Automation for Small Teams</title>
   <meta name="description" content="Flowly helps small teams automate repetitive work, connect their favorite tools, and ship projects faster — no code required.">
   <script>
-    /* Apply the theme before first paint to prevent a flash of the wrong theme */
+    /* Runs before first paint: flags JS support (for reveal animations) and applies
+       the theme early to prevent a flash of the wrong theme */
     (function () {
+      var root = document.documentElement;
       var theme = null;
+      root.classList.add('js');
       try { theme = localStorage.getItem('flowly-theme'); } catch (e) {}
       if (theme !== 'dark' && theme !== 'light') {
         theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       }
-      document.documentElement.setAttribute('data-theme', theme);
+      root.setAttribute('data-theme', theme);
     })();
   </script>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234338ca'/%3E%3Cpath d='M18 5 8 18h7l-1 9 10-13h-7z' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234f46e5'/%3E%3Cstop offset='1' stop-color='%237c3aed'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='32' height='32' rx='9' fill='url(%23g)'/%3E%3Cpath d='M18 5 8 18h7l-1 9 10-13h-7z' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Sora:wght@600;700;800&amp;display=swap">
   <link rel="stylesheet" href="css/styles.css">
   <script src="js/main.js" defer></script>
 </head>
@@ -24,8 +30,13 @@
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <header class="site-header">
-    <div class="container site-header__inner">
-      <a class="site-header__logo" href="#hero">Flowly</a>
+    <div class="site-header__inner glass glass--blur">
+      <a class="site-header__logo" href="#hero">
+        <span class="logo-mark" aria-hidden="true">
+          <svg focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+        </span>
+        Flowly
+      </a>
 
       <nav class="site-nav" aria-label="Main navigation">
         <button class="site-nav__toggle" type="button" aria-controls="site-nav-list" aria-expanded="false" aria-label="Open main menu">
@@ -55,33 +66,97 @@
 
   <main id="main-content" tabindex="-1">
     <section class="hero" id="hero" aria-labelledby="hero-title">
-      <div class="container">
-        <h1 class="hero__title" id="hero-title">Automate the busywork. Focus on what matters.</h1>
-        <p class="hero__subtitle">Flowly connects the tools your team already uses and turns repetitive tasks into automated workflows — set up in minutes, no code required.</p>
-        <p class="hero__actions">
-          <a class="button button--primary" href="#contact">Start free trial</a>
-          <a class="button button--secondary" href="#features">See features</a>
-        </p>
+      <div class="hero__backdrop" aria-hidden="true">
+        <span class="hero__blob hero__blob--one"></span>
+        <span class="hero__blob hero__blob--two"></span>
+        <span class="hero__blob hero__blob--three"></span>
+        <span class="hero__grid"></span>
+      </div>
+
+      <div class="container hero__inner">
+        <div class="hero__content" data-reveal>
+          <p class="hero__badge glass"><span class="hero__badge-tag">New</span> AI-suggested workflows are here</p>
+          <h1 class="hero__title" id="hero-title">Automate the busywork. <span class="text-gradient">Focus on what matters.</span></h1>
+          <p class="hero__subtitle">Flowly connects the tools your team already uses and turns repetitive tasks into automated workflows — set up in minutes, no code required.</p>
+          <p class="hero__actions">
+            <a class="button button--primary" href="#contact">Start free trial</a>
+            <a class="button button--secondary" href="#features">See features</a>
+          </p>
+          <p class="hero__note">Free 14-day trial · No credit card required</p>
+        </div>
+
+        <div class="hero__visual" aria-hidden="true" data-reveal>
+          <div class="workflow glass glass--blur gradient-border">
+            <div class="workflow__bar">
+              <span class="workflow__dots"><span class="workflow__dot"></span><span class="workflow__dot"></span><span class="workflow__dot"></span></span>
+              <span class="workflow__name">Client onboarding</span>
+              <span class="workflow__live"><span class="workflow__live-dot"></span>Live</span>
+            </div>
+            <div class="workflow__steps">
+              <div class="workflow__node">
+                <span class="workflow__icon">
+                  <svg focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
+                </span>
+                <span class="workflow__text"><span class="workflow__label">Trigger</span><span class="workflow__title">New form entry</span></span>
+                <span class="workflow__meta">Typeform</span>
+              </div>
+              <div class="workflow__connector"><span class="workflow__packet"></span></div>
+              <div class="workflow__node workflow__node--right">
+                <span class="workflow__icon workflow__icon--violet">
+                  <svg focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </span>
+                <span class="workflow__text"><span class="workflow__label">Action</span><span class="workflow__title">Notify Slack</span></span>
+                <span class="workflow__meta">#sales</span>
+              </div>
+              <div class="workflow__connector"><span class="workflow__packet"></span></div>
+              <div class="workflow__node">
+                <span class="workflow__icon workflow__icon--cyan">
+                  <svg focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                </span>
+                <span class="workflow__text"><span class="workflow__label">Action</span><span class="workflow__title">Create task</span></span>
+                <span class="workflow__meta">Notion</span>
+              </div>
+              <div class="workflow__connector"><span class="workflow__packet"></span></div>
+              <div class="workflow__node workflow__node--right">
+                <span class="workflow__icon workflow__icon--success">
+                  <svg focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </span>
+                <span class="workflow__text"><span class="workflow__label">Result</span><span class="workflow__title">Done ✓</span></span>
+                <span class="workflow__meta">0.8s</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="workflow-badge glass glass--blur">
+            <span class="workflow-badge__icon">
+              <svg focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+            </span>
+            <span><strong class="workflow-badge__value">12h</strong> saved this week</span>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="about" id="about" aria-labelledby="about-title">
-      <div class="container">
-        <h2 class="about__title" id="about-title">Built for small teams that move fast</h2>
-        <p class="about__text">Flowly started in 2023 when our founders were tired of copying data between spreadsheets, chat apps, and project boards. We built the tool we wished we had: simple enough for anyone on the team, powerful enough to replace hours of manual work every week.</p>
-        <p class="about__text">Today, teams in design studios, agencies, and startups use Flowly to route requests, sync updates, and keep everyone on the same page — without hiring an operations engineer.</p>
+      <div class="container about__inner">
+        <div class="about__content" data-reveal>
+          <p class="section-eyebrow">Why Flowly</p>
+          <h2 class="about__title" id="about-title">Built for small teams that move fast</h2>
+          <p class="about__text">Flowly started in 2023 when our founders were tired of copying data between spreadsheets, chat apps, and project boards. We built the tool we wished we had: simple enough for anyone on the team, powerful enough to replace hours of manual work every week.</p>
+          <p class="about__text">Today, teams in design studios, agencies, and startups use Flowly to route requests, sync updates, and keep everyone on the same page — without hiring an operations engineer.</p>
+        </div>
         <dl class="about__stats">
-          <div class="about__stat">
+          <div class="about__stat glass gradient-border" data-reveal>
             <dt class="about__stat-label">Teams using Flowly</dt>
-            <dd class="about__stat-value">4,200+</dd>
+            <dd class="about__stat-value text-gradient" data-count="4200" data-suffix="+">4,200+</dd>
           </div>
-          <div class="about__stat">
+          <div class="about__stat glass gradient-border" data-reveal>
             <dt class="about__stat-label">Hours saved every month</dt>
-            <dd class="about__stat-value">120,000</dd>
+            <dd class="about__stat-value text-gradient" data-count="120000">120,000</dd>
           </div>
-          <div class="about__stat">
+          <div class="about__stat glass gradient-border" data-reveal>
             <dt class="about__stat-label">Native integrations</dt>
-            <dd class="about__stat-value">150+</dd>
+            <dd class="about__stat-value text-gradient" data-count="150" data-suffix="+">150+</dd>
           </div>
         </dl>
       </div>
@@ -89,34 +164,47 @@
 
     <section class="features" id="features" aria-labelledby="features-title">
       <div class="container">
-        <h2 class="features__title" id="features-title">Everything you need to work smarter</h2>
+        <header class="section-header" data-reveal>
+          <p class="section-eyebrow">Features</p>
+          <h2 class="features__title" id="features-title">Everything you need to work smarter</h2>
+          <p class="section-intro">Powerful building blocks that fit the way your team already works.</p>
+        </header>
         <ul class="features__list">
-          <li class="features__item">
-            <article class="feature-card">
-              <svg class="feature-card__icon" aria-hidden="true" focusable="false" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-              </svg>
+          <li class="features__item" data-reveal>
+            <article class="feature-card glass gradient-border">
+              <span class="feature-card__index" aria-hidden="true">01</span>
+              <span class="feature-card__icon-tile" aria-hidden="true">
+                <svg class="feature-card__icon" focusable="false" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+              </span>
               <h3 class="feature-card__title">Visual workflow builder</h3>
               <p class="feature-card__text">Drag, drop, and connect steps to build automations in minutes. No scripts, no developer tickets.</p>
             </article>
           </li>
-          <li class="features__item">
-            <article class="feature-card">
-              <svg class="feature-card__icon" aria-hidden="true" focusable="false" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
-                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-              </svg>
+          <li class="features__item" data-reveal>
+            <article class="feature-card glass gradient-border">
+              <span class="feature-card__index" aria-hidden="true">02</span>
+              <span class="feature-card__icon-tile" aria-hidden="true">
+                <svg class="feature-card__icon" focusable="false" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                </svg>
+              </span>
               <h3 class="feature-card__title">150+ integrations</h3>
               <p class="feature-card__text">Connect Slack, Google Workspace, Notion, Trello, and more so data flows between apps automatically.</p>
             </article>
           </li>
-          <li class="features__item">
-            <article class="feature-card">
-              <svg class="feature-card__icon" aria-hidden="true" focusable="false" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="20" x2="18" y2="10"/>
-                <line x1="12" y1="20" x2="12" y2="4"/>
-                <line x1="6" y1="20" x2="6" y2="14"/>
-              </svg>
+          <li class="features__item" data-reveal>
+            <article class="feature-card glass gradient-border">
+              <span class="feature-card__index" aria-hidden="true">03</span>
+              <span class="feature-card__icon-tile" aria-hidden="true">
+                <svg class="feature-card__icon" focusable="false" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="20" x2="18" y2="10"/>
+                  <line x1="12" y1="20" x2="12" y2="4"/>
+                  <line x1="6" y1="20" x2="6" y2="14"/>
+                </svg>
+              </span>
               <h3 class="feature-card__title">Real-time insights</h3>
               <p class="feature-card__text">See which workflows run, how much time they save, and where work gets stuck, all in one dashboard.</p>
             </article>
@@ -126,10 +214,34 @@
     </section>
 
     <section class="contact" id="contact" aria-labelledby="contact-title">
-      <div class="container">
-        <h2 class="contact__title" id="contact-title">Get in touch</h2>
-        <p class="contact__intro">Have a question or want a demo? Send us a message and we'll reply within one business day.</p>
-        <form class="contact-form" action="#" method="post" novalidate>
+      <div class="container contact__inner">
+        <div class="contact__info" data-reveal>
+          <p class="section-eyebrow">Contact</p>
+          <h2 class="contact__title" id="contact-title">Get in touch</h2>
+          <p class="contact__intro">Have a question or want a demo? Send us a message and we'll reply within one business day.</p>
+          <ul class="contact__perks">
+            <li class="contact__perk">
+              <span class="contact__perk-icon" aria-hidden="true">
+                <svg focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </span>
+              Replies within one business day
+            </li>
+            <li class="contact__perk">
+              <span class="contact__perk-icon" aria-hidden="true">
+                <svg focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+              </span>
+              14-day free trial, no credit card
+            </li>
+            <li class="contact__perk">
+              <span class="contact__perk-icon" aria-hidden="true">
+                <svg focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </span>
+              Free onboarding call for your team
+            </li>
+          </ul>
+        </div>
+
+        <form class="contact-form glass glass--blur gradient-border" action="#" method="post" novalidate data-reveal>
           <p class="contact-form__field">
             <label class="contact-form__label" for="contact-name">Name</label>
             <input class="contact-form__input" type="text" id="contact-name" name="name" autocomplete="name" required aria-describedby="contact-name-error">
@@ -157,7 +269,15 @@
 
   <footer class="site-footer">
     <div class="container site-footer__inner">
-      <p class="site-footer__copy">&copy; 2026 Flowly. All rights reserved.</p>
+      <div class="site-footer__brand">
+        <a class="site-footer__logo" href="#hero">
+          <span class="logo-mark" aria-hidden="true">
+            <svg focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+          </span>
+          Flowly
+        </a>
+        <p class="site-footer__tagline">Automate the busywork. Focus on what matters.</p>
+      </div>
       <nav class="site-footer__nav" aria-label="Footer navigation">
         <ul class="site-footer__list">
           <li class="site-footer__item"><a class="site-footer__link" href="#about">About</a></li>
@@ -165,6 +285,7 @@
           <li class="site-footer__item"><a class="site-footer__link" href="#contact">Contact</a></li>
         </ul>
       </nav>
+      <p class="site-footer__copy">&copy; 2026 Flowly. All rights reserved.</p>
     </div>
   </footer>
 </body>
