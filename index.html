@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flowly — Workflow Automation for Small Teams</title>
+  <meta name="description" content="Flowly helps small teams automate repetitive work, connect their favorite tools, and ship projects faster — no code required.">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="site-header__logo" href="#hero">Flowly</a>
+
+    <nav class="site-nav" aria-label="Main navigation">
+      <button class="site-nav__toggle" type="button" aria-controls="site-nav-list" aria-expanded="false" aria-label="Open main menu">
+        <span class="site-nav__toggle-bar" aria-hidden="true"></span>
+        <span class="site-nav__toggle-bar" aria-hidden="true"></span>
+        <span class="site-nav__toggle-bar" aria-hidden="true"></span>
+      </button>
+      <ul class="site-nav__list" id="site-nav-list">
+        <li class="site-nav__item"><a class="site-nav__link" href="#hero">Home</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="#about">About</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="#features">Features</a></li>
+        <li class="site-nav__item"><a class="site-nav__link" href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <button class="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">
+      <svg class="theme-toggle__icon" aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+    </button>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" id="hero" aria-labelledby="hero-title">
+      <h1 class="hero__title" id="hero-title">Automate the busywork. Focus on what matters.</h1>
+      <p class="hero__subtitle">Flowly connects the tools your team already uses and turns repetitive tasks into automated workflows — set up in minutes, no code required.</p>
+      <p class="hero__actions">
+        <a class="button button--primary" href="#contact">Start free trial</a>
+        <a class="button button--secondary" href="#features">See features</a>
+      </p>
+    </section>
+
+    <section class="about" id="about" aria-labelledby="about-title">
+      <h2 class="about__title" id="about-title">Built for small teams that move fast</h2>
+      <p class="about__text">Flowly started in 2023 when our founders were tired of copying data between spreadsheets, chat apps, and project boards. We built the tool we wished we had: simple enough for anyone on the team, powerful enough to replace hours of manual work every week.</p>
+      <p class="about__text">Today, teams in design studios, agencies, and startups use Flowly to route requests, sync updates, and keep everyone on the same page — without hiring an operations engineer.</p>
+      <dl class="about__stats">
+        <div class="about__stat">
+          <dt class="about__stat-label">Teams using Flowly</dt>
+          <dd class="about__stat-value">4,200+</dd>
+        </div>
+        <div class="about__stat">
+          <dt class="about__stat-label">Hours saved every month</dt>
+          <dd class="about__stat-value">120,000</dd>
+        </div>
+        <div class="about__stat">
+          <dt class="about__stat-label">Native integrations</dt>
+          <dd class="about__stat-value">150+</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="features" id="features" aria-labelledby="features-title">
+      <h2 class="features__title" id="features-title">Everything you need to work smarter</h2>
+      <ul class="features__list">
+        <li class="features__item">
+          <article class="feature-card">
+            <svg class="feature-card__icon" aria-hidden="true" focusable="false" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+            <h3 class="feature-card__title">Visual workflow builder</h3>
+            <p class="feature-card__text">Drag, drop, and connect steps to build automations in minutes. No scripts, no developer tickets.</p>
+          </article>
+        </li>
+        <li class="features__item">
+          <article class="feature-card">
+            <svg class="feature-card__icon" aria-hidden="true" focusable="false" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+            <h3 class="feature-card__title">150+ integrations</h3>
+            <p class="feature-card__text">Connect Slack, Google Workspace, Notion, Trello, and more so data flows between apps automatically.</p>
+          </article>
+        </li>
+        <li class="features__item">
+          <article class="feature-card">
+            <svg class="feature-card__icon" aria-hidden="true" focusable="false" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"/>
+              <line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+            <h3 class="feature-card__title">Real-time insights</h3>
+            <p class="feature-card__text">See which workflows run, how much time they save, and where work gets stuck, all in one dashboard.</p>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <h2 class="contact__title" id="contact-title">Get in touch</h2>
+      <p class="contact__intro">Have a question or want a demo? Send us a message and we'll reply within one business day.</p>
+      <form class="contact-form" action="#" method="post" novalidate>
+        <p class="contact-form__field">
+          <label class="contact-form__label" for="contact-name">Name</label>
+          <input class="contact-form__input" type="text" id="contact-name" name="name" autocomplete="name" required aria-describedby="contact-name-error">
+        </p>
+        <p class="contact-form__error" id="contact-name-error"></p>
+
+        <p class="contact-form__field">
+          <label class="contact-form__label" for="contact-email">Email</label>
+          <input class="contact-form__input" type="email" id="contact-email" name="email" autocomplete="email" required aria-describedby="contact-email-error">
+        </p>
+        <p class="contact-form__error" id="contact-email-error"></p>
+
+        <p class="contact-form__field">
+          <label class="contact-form__label" for="contact-message">Message</label>
+          <textarea class="contact-form__input contact-form__input--textarea" id="contact-message" name="message" rows="5" autocomplete="off" required aria-describedby="contact-message-error"></textarea>
+        </p>
+        <p class="contact-form__error" id="contact-message-error"></p>
+
+        <button class="button button--primary contact-form__submit" type="submit">Send message</button>
+        <p class="contact-form__status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p class="site-footer__copy">&copy; 2026 Flowly. All rights reserved.</p>
+    <nav class="site-footer__nav" aria-label="Footer navigation">
+      <ul class="site-footer__list">
+        <li class="site-footer__item"><a class="site-footer__link" href="#about">About</a></li>
+        <li class="site-footer__item"><a class="site-footer__link" href="#features">Features</a></li>
+        <li class="site-footer__item"><a class="site-footer__link" href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </footer>
+</body>
+</html>
