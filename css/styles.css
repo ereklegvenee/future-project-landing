@@ -49,6 +49,24 @@
   --transition: 200ms ease;
 }
 
+/* Dark theme — overrides color tokens only; components pick them up automatically */
+:root[data-theme="dark"] {
+  --color-bg: #0f172a;
+  --color-surface: #1e293b;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
+  --color-primary: #a5b4fc;
+  --color-primary-hover: #c7d2fe;
+  --color-on-primary: #0f172a;
+  --color-border: #334155;
+  --color-border-strong: #64748b;
+  --color-focus: #a5b4fc;
+  --color-error: #fca5a5;
+  --color-success: #86efac;
+
+  color-scheme: dark; /* native scrollbars and form controls follow the theme */
+}
+
 /* ==========================================================================
    2) Reset / base
    ========================================================================== */
@@ -330,6 +348,16 @@ a:hover {
   height: 1.25rem;
 }
 
+/* Light theme shows the moon (switch to dark); dark theme shows the sun */
+.theme-toggle__icon--sun,
+:root[data-theme="dark"] .theme-toggle__icon--moon {
+  display: none;
+}
+
+:root[data-theme="dark"] .theme-toggle__icon--sun {
+  display: block;
+}
+
 /* ==========================================================================
    5) Hero
    ========================================================================== */
@@ -561,6 +589,21 @@ a:hover {
 
 .site-footer__link:hover {
   color: var(--color-primary);
+}
+
+/* ==========================================================================
+   Theme switch transition
+   Applied briefly by JS only while switching, so page load and normal
+   hover effects are not slowed down.
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  .theme-transition,
+  .theme-transition *,
+  .theme-transition *::before,
+  .theme-transition *::after {
+    transition: background-color 300ms ease, color 300ms ease,
+      border-color 300ms ease, box-shadow 300ms ease;
+  }
 }
 
 /* ==========================================================================
