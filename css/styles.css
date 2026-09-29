@@ -198,13 +198,16 @@ a:hover {
    4) Header
    ========================================================================== */
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   border-bottom: 1px solid var(--color-border);
   background-color: var(--color-bg);
+  box-shadow: var(--shadow-sm);
 }
 
 .site-header__inner {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   gap: var(--space-sm) var(--space-md);
   min-height: var(--header-height);
@@ -230,15 +233,38 @@ a:hover {
   gap: var(--space-sm);
 }
 
+/* Mobile: collapsed dropdown panel below the sticky header */
 .site-nav__list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2xs) var(--space-md);
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding: var(--space-sm) var(--space-md) var(--space-md);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-bg);
+  box-shadow: var(--shadow-lg);
+  /* visibility: hidden also removes the links from the tab order */
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-0.5rem);
+  transition: opacity var(--transition), transform var(--transition),
+    visibility 0s linear 200ms;
+}
+
+.site-nav__list--open {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--transition), transform var(--transition),
+    visibility 0s;
 }
 
 .site-nav__link {
-  display: inline-block;
-  padding: var(--space-2xs) var(--space-xs);
+  display: block;
+  padding: var(--space-sm) var(--space-xs);
   border-radius: var(--radius-sm);
   font-weight: 500;
   color: var(--color-text);
@@ -249,7 +275,7 @@ a:hover {
   color: var(--color-primary);
 }
 
-/* Hamburger & theme buttons — basic look; behavior comes later */
+/* Hamburger & theme buttons */
 .site-nav__toggle,
 .theme-toggle {
   display: inline-flex;
@@ -282,6 +308,21 @@ a:hover {
   height: 2px;
   border-radius: 2px;
   background-color: currentColor;
+  transition: transform var(--transition), opacity var(--transition);
+}
+
+/* Morph the three bars into an "X" while the menu is open.
+   Offset = bar gap (0.3rem) + bar height (2px). */
+.site-nav__toggle[aria-expanded="true"] .site-nav__toggle-bar:nth-child(1) {
+  transform: translateY(calc(0.3rem + 2px)) rotate(45deg);
+}
+
+.site-nav__toggle[aria-expanded="true"] .site-nav__toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.site-nav__toggle[aria-expanded="true"] .site-nav__toggle-bar:nth-child(3) {
+  transform: translateY(calc(-0.3rem - 2px)) rotate(-45deg);
 }
 
 .theme-toggle__icon {
@@ -532,6 +573,25 @@ a:hover {
 
   .site-nav__toggle {
     display: none;
+  }
+
+  /* Desktop: nav is always visible as an inline horizontal list */
+  .site-nav__list {
+    position: static;
+    flex-direction: row;
+    gap: var(--space-md);
+    padding: 0;
+    border: 0;
+    background-color: transparent;
+    box-shadow: none;
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .site-nav__link {
+    padding: var(--space-2xs) var(--space-xs);
   }
 
   .hero__actions {
