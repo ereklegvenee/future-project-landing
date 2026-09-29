@@ -46,7 +46,8 @@
   /* Layout */
   --max-width: 72rem;
   --header-height: 4rem;
-  --transition: 200ms ease;
+  --duration: 200ms;
+  --transition: var(--duration) ease;
 }
 
 /* Dark theme — overrides color tokens only; components pick them up automatically */
@@ -89,6 +90,7 @@ html {
 
 body {
   min-height: 100vh;
+  overflow-wrap: break-word; /* long words/URLs never cause horizontal scroll */
   font-family: var(--font-sans);
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
@@ -136,6 +138,10 @@ a:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration: 0.01ms; /* component transitions all use this token */
+  }
+
   html {
     scroll-behavior: auto;
   }
@@ -147,6 +153,34 @@ a:hover {
     animation-duration: 0.01ms;
     animation-iteration-count: 1;
   }
+}
+
+/* Skip link: hidden off-screen until it receives keyboard focus */
+.skip-link {
+  position: absolute;
+  top: var(--space-xs);
+  left: var(--space-xs);
+  z-index: 200;
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.skip-link:hover {
+  color: var(--color-on-primary);
+}
+
+/* <main> receives focus from the skip link; no outline needed on the whole region */
+main:focus {
+  outline: none;
 }
 
 /* ==========================================================================
@@ -269,7 +303,7 @@ a:hover {
   opacity: 0;
   transform: translateY(-0.5rem);
   transition: opacity var(--transition), transform var(--transition),
-    visibility 0s linear 200ms;
+    visibility 0s linear var(--duration);
 }
 
 .site-nav__list--open {
@@ -669,6 +703,7 @@ a:hover {
   .about .container {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto 1fr; /* extra height from the stats column goes to the last row */
     column-gap: var(--space-3xl);
     align-items: start;
   }
